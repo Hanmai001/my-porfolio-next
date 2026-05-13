@@ -1,6 +1,13 @@
-import { redirect } from "next/navigation";
-import { APP_ROUTES } from "@/shared/config/constants";
+import type { Metadata } from "next";
 
-export default function RootPage() {
-  redirect(APP_ROUTES.app.dashboard);
+import { PortfolioHeroView } from "@/features/portfolio/views/PortfolioHeroView";
+
+export const metadata: Metadata = {
+  title: "Helen Mai",
+  description:
+    "Interactive frontend portfolio for polished web experiences and motion systems.",
+};
+
+export default function HomePage() {
+  return <PortfolioHeroView />;
 }
