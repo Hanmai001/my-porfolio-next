@@ -21,9 +21,11 @@ function canUseMagnetic() {
 export function MagneticButton({
   href,
   label,
+  onClick,
 }: {
   href: string;
   label: string;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   const shouldReduceMotion = useReducedMotion();
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -85,7 +87,8 @@ export function MagneticButton({
     >
       <a
         ref={buttonRef}
-        href={href} 
+        href={href}
+        onClick={onClick}
         className="group relative inline-flex items-center gap-3 overflow-hidden rounded-sm border border-white/15 bg-white/95 px-6 font-mono text-base font-black uppercase tracking-widest text-surface-base shadow-[0_8px_24px_rgb(0_0_0/0.3)] backdrop-blur-sm outline-none focus-visible:ring-4 focus-visible:ring-ring/40 sm:h-16 sm:px-6 sm:text-lg"
         style={{ display: "inline-flex" }}
       >

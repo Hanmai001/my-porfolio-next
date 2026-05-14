@@ -9,11 +9,13 @@ import {
   useSpring,
 } from "framer-motion";
 import type { PointerEvent } from "react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
+import { cn } from "@/shared/lib/utils";
 import type { Phase } from "./HeroName";
 import { entranceEase, heroContent, lensSpring } from "../constants/hero";
 import { FloatingTag } from "./FloatingTag";
+import { FloatingTagCursor } from "./FloatingTagCursor";
 import { HeroName, useTypewriterSequence } from "./HeroName";
 import { InversionLens } from "./InversionLens";
 
@@ -41,7 +43,7 @@ function Annotation({
       initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       transition={{ delay: 0.16, duration: 0.58, ease: entranceEase }}
-      className="text-foreground mb-24 font-annotation text-xl lowercase leading-none tracking-normal sm:mb-28 sm:text-3xl"
+      className="text-foreground mb-14 font-annotation text-xl lowercase leading-none tracking-normal sm:mb-20 sm:text-3xl lg:mb-24"
     >
       <span className={maskMode ? `-rotate-3 inline-block ${maskTextClassName}` : "-rotate-3 inline-block"}>
         {heroContent.annotation}
@@ -123,14 +125,22 @@ function HeaderArtwork({
         }}
       >
         {heroContent.headerTags.map((tag, index) => (
-          <FloatingTag
-            key={tag.text}
-            text={tag.text}
-            className={tag.className}
-            index={index}
-            tone={tag.tone}
-            maskMode={maskMode}
-          />
+          <Fragment key={tag.text}>
+            <FloatingTag
+              text={tag.text}
+              className={cn(tag.className, "max-lg:hidden")}
+              index={index}
+              tone={tag.tone}
+              maskMode={maskMode}
+            />
+            <FloatingTagCursor
+              text={tag.text}
+              abbr={tag.abbr}
+              tone={tag.tone}
+              className={cn(tag.className, "lg:hidden")}
+              index={index}
+            />
+          </Fragment>
         ))}
       </motion.div>
 

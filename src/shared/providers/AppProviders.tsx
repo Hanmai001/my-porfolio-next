@@ -1,16 +1,33 @@
 "use client";
 
+import { createContext, useCallback, useContext, useEffect, useRef } from "react";
 import { MotionConfig, useReducedMotion } from "framer-motion";
 import Lenis from "lenis";
-import { useEffect, useRef } from "react";
 
 interface AppProvidersProps {
   children: React.ReactNode;
 }
 
+type ScrollToTarget = string | number | HTMLElement;
+type ScrollToOptions = Parameters<Lenis["scrollTo"]>[1];
+
+type LenisContextValue = {
+  scrollTo: (target: ScrollToTarget, options?: ScrollToOptions) => void;
+};
+
+const LenisContext = createContext<LenisContextValue>({ scrollTo: () => {} });
+
+export function useLenis() {
+  return useContext(LenisContext);
+}
+
 function LenisProvider({ children }: AppProvidersProps) {
   const shouldReduceMotion = useReducedMotion();
   const lenisRef = useRef<Lenis | null>(null);
+
+  const scrollTo = useCallback((target: ScrollToTarget, options?: ScrollToOptions) => {
+    lenisRef.current?.scrollTo(target as never, options);
+  }, []);
 
   useEffect(() => {
     if (shouldReduceMotion) {
@@ -47,7 +64,11 @@ function LenisProvider({ children }: AppProvidersProps) {
     };
   }, [shouldReduceMotion]);
 
-  return <>{children}</>;
+  return (
+    <LenisContext.Provider value={{ scrollTo }}>
+      {children}
+    </LenisContext.Provider>
+  );
 }
 
 function AppProviders({ children }: AppProvidersProps) {

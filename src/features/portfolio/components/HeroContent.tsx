@@ -2,23 +2,31 @@
 
 import { motion } from "framer-motion";
 
+import { useLenis } from "@/shared/providers/AppProviders";
 import { entranceEase, heroContent } from "../constants/hero";
 import { MagneticButton } from "./MagneticButton";
 
 export function HeroContent({ shouldReduceMotion: _ }: { shouldReduceMotion: boolean }) {
+  const { scrollTo } = useLenis();
+
+  function handleCTAClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    scrollTo("#about", { duration: 1.4, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+  }
+
   return (
     <div className="relative z-20 mx-auto flex w-full max-w-6xl flex-col items-center text-center">
       <motion.p
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.02, duration: 0.48, ease: entranceEase }}
-        className="text-foreground mt-10 max-w-152 text-balance text-2xl font-normal leading-10 tracking-wide sm:mt-14 sm:text-3xl"
+        className="text-foreground mt-10 max-w-152 text-balance text-2xl font-normal leading-9 tracking-wide sm:mt-14 sm:leading-10 sm:text-3xl"
       >
         {heroContent.headline}
       </motion.p>
 
       <div className="mt-7 sm:mt-8">
-        <MagneticButton href="#about" label={heroContent.cta} />
+        <MagneticButton href="#about" label={heroContent.cta} onClick={handleCTAClick} />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 import {
   motion,
@@ -11,7 +11,9 @@ import {
 } from "framer-motion";
 import type { PointerEvent } from "react";
 
+import { cn } from "@/shared/lib/utils";
 import { DotGridBackground } from "../components/DotGridBackground";
+import { FloatingTagCursor } from "../components/FloatingTagCursor";
 import { FloatingTag } from "../components/FloatingTag";
 import { HeroContent } from "../components/HeroContent";
 import { HeroHeader } from "../components/HeroHeader";
@@ -53,13 +55,12 @@ export function PortfolioHeroView() {
   }
 
   return (
-    <main className="bg-background text-foreground overflow-hidden">
-      <section
-        className="relative flex h-svh cursor-default flex-col items-center justify-center overflow-hidden px-5 py-10 [@media(hover:hover)_and_(pointer:fine)]:cursor-none sm:px-8 lg:px-12"
-        onPointerMove={updatePointer}
-        onPointerLeave={resetPointer}
-        onPointerEnter={() => setIsPointerInside(true)}
-      >
+    <section
+      className="relative flex h-svh cursor-default flex-col items-center justify-center overflow-hidden px-5 py-10 [@media(hover:hover)_and_(pointer:fine)]:cursor-none sm:px-8 lg:px-12"
+      onPointerMove={updatePointer}
+      onPointerLeave={resetPointer}
+      onPointerEnter={() => setIsPointerInside(true)}
+    >
         {/* Background dot grid */}
         <DotGridBackground mouseX={cursorAbsX} mouseY={cursorAbsY} />
 
@@ -77,15 +78,26 @@ export function PortfolioHeroView() {
             y: shouldReduceMotion ? 0 : tagsY,
           }}
         >
-          {heroContent.footerTags.map((tag, index) => (
-            <FloatingTag
-              key={tag.text}
-              text={tag.text}
-              className={tag.className}
-              index={index + heroContent.headerTags.length}
-              tone={tag.tone}
-            />
-          ))}
+          {heroContent.footerTags.map((tag, index) => {
+            const i = index + heroContent.headerTags.length;
+            return (
+              <Fragment key={tag.text}>
+                <FloatingTag
+                  text={tag.text}
+                  className={cn(tag.className, "max-lg:hidden")}
+                  index={i}
+                  tone={tag.tone}
+                />
+                <FloatingTagCursor
+                  text={tag.text}
+                  abbr={tag.abbr}
+                  tone={tag.tone}
+                  className={cn(tag.className, "lg:hidden")}
+                  index={i}
+                />
+              </Fragment>
+            );
+          })}
         </motion.div>
 
         {/* Decorative cursors */}
@@ -115,7 +127,6 @@ export function PortfolioHeroView() {
 
           <HeroContent shouldReduceMotion={Boolean(shouldReduceMotion)} />
         </div>
-      </section>
-    </main>
+    </section>
   );
 }

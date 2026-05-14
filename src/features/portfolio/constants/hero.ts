@@ -11,26 +11,30 @@ export const heroContent = {
   headerTags: [
     {
       text: "Crafting polished AI-powered interfaces",
+      abbr: "AI",
       tone: "secondary" as TagTone,
-      className: "left-35 top-[5%] rotate-[12deg]",
+      className: "left-[8%] top-[5%] rotate-[12deg]",
     },
     {
       text: "Motion systems • UX engineering • scalability",
+      abbr: "UX",
       tone: "warning" as TagTone,
-      className: "right-30 top-[5%] -rotate-[12deg] max-sm:hidden",
+      className: "right-[5%] top-[5%] -rotate-[12deg]",
     },
   ],
 
   footerTags: [
     {
       text: "FRONTEND ENGINEER",
+      abbr: "FE",
       tone: "primary" as TagTone,
-      className: "bottom-[12%] left-0 -rotate-[10deg] max-sm:hidden",
+      className: "bottom-[12%] left-0 -rotate-[10deg]",
     },
     {
       text: "HO CHI MINH CITY",
+      abbr: "HC",
       tone: "energy" as TagTone,
-      className: "bottom-[12%] right-0 rotate-[8deg] max-sm:hidden",
+      className: "bottom-[12%] right-0 rotate-[8deg]",
     },
   ],
 
@@ -50,7 +54,7 @@ export const heroContent = {
     {
       name: "Alex",
       message: "The UI responsiveness is noticeably improved.",
-      className: "right-[18%] bottom-[26%] max-md:hidden",
+      className: "right-[18%] bottom-[26%]",
       delay: 1.7,
     },
   ],
