@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import type { PointerEvent } from "react";
 
+import { DotGridBackground } from "../components/DotGridBackground";
 import { FloatingTag } from "../components/FloatingTag";
 import { HeroContent } from "../components/HeroContent";
 import { HeroHeader } from "../components/HeroHeader";
@@ -25,8 +26,6 @@ export function PortfolioHeroView() {
   const pointerY = useMotionValue(0);
   const smoothX = useSpring(pointerX, { stiffness: 80, damping: 24, mass: 0.5 });
   const smoothY = useSpring(pointerY, { stiffness: 80, damping: 24, mass: 0.5 });
-  const gridX = useTransform(smoothX, [-1, 1], [-10, 10]);
-  const gridY = useTransform(smoothY, [-1, 1], [-8, 8]);
   const nameX = useTransform(smoothX, [-1, 1], [-14, 14]);
   const nameY = useTransform(smoothY, [-1, 1], [-10, 10]);
   const tagsX = useTransform(smoothX, [-1, 1], [-18, 18]);
@@ -34,8 +33,8 @@ export function PortfolioHeroView() {
 
   const cursorAbsX = useMotionValue(0);
   const cursorAbsY = useMotionValue(0);
-  const smoothCursorX = useSpring(cursorAbsX, { stiffness: 600, damping: 32 });
-  const smoothCursorY = useSpring(cursorAbsY, { stiffness: 600, damping: 32 });
+  const smoothCursorX = useSpring(cursorAbsX, { stiffness: 800, damping: 28 });
+  const smoothCursorY = useSpring(cursorAbsY, { stiffness: 800, damping: 28 });
   const [isPointerInside, setIsPointerInside] = useState(false);
 
   function updatePointer(event: PointerEvent<HTMLElement>) {
@@ -56,23 +55,13 @@ export function PortfolioHeroView() {
   return (
     <main className="bg-background text-foreground overflow-hidden">
       <section
-        className="relative flex h-[100svh] cursor-default flex-col items-center justify-center overflow-hidden px-5 py-10 [@media(hover:hover)_and_(pointer:fine)]:cursor-none sm:px-8 lg:px-12"
+        className="relative flex h-svh cursor-default flex-col items-center justify-center overflow-hidden px-5 py-10 [@media(hover:hover)_and_(pointer:fine)]:cursor-none sm:px-8 lg:px-12"
         onPointerMove={updatePointer}
         onPointerLeave={resetPointer}
         onPointerEnter={() => setIsPointerInside(true)}
       >
-        {/* Background grid */}
-        <motion.div
-          aria-hidden="true"
-          className="blueprint-grid absolute inset-0 opacity-80"
-          style={{
-            x: shouldReduceMotion ? 0 : gridX,
-            y: shouldReduceMotion ? 0 : gridY,
-          }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.8 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-        />
+        {/* Background dot grid */}
+        <DotGridBackground mouseX={cursorAbsX} mouseY={cursorAbsY} />
 
         {/* Clock overlay */}
         <div className="text-muted-foreground pointer-events-none absolute inset-x-0 top-3 z-10 text-center font-mono text-sm font-black tracking-[0.12em] sm:text-base">
@@ -115,7 +104,7 @@ export function PortfolioHeroView() {
         <PortfolioCursor x={smoothCursorX} y={smoothCursorY} isVisible={isPointerInside} />
 
         {/* Main content stack */}
-        <div className="relative z-20 flex w-full flex-col items-center gap-4 sm:gap-16">
+        <div className="relative z-20 flex w-full flex-col items-center gap-8 sm:gap-20">
           <HeroHeader
             shouldReduceMotion={Boolean(shouldReduceMotion)}
             nameX={nameX}

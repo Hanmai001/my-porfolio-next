@@ -12,7 +12,7 @@ export function HeroContent({ shouldReduceMotion: _ }: { shouldReduceMotion: boo
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.02, duration: 0.48, ease: entranceEase }}
-        className="text-foreground mt-6 max-w-152 text-balance text-2xl font-medium leading-12 tracking-wider sm:mt-8 sm:text-4xl"
+        className="text-foreground mt-10 max-w-152 text-balance text-2xl font-normal leading-10 tracking-wide sm:mt-14 sm:text-3xl"
       >
         {heroContent.headline}
       </motion.p>

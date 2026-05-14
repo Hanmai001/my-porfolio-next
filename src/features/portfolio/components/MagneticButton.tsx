@@ -85,13 +85,13 @@ export function MagneticButton({
     >
       <a
         ref={buttonRef}
-        href={href}
-        className="group relative inline-flex items-center gap-3 overflow-hidden border-2 bg-foreground px-6 font-mono text-base font-black uppercase tracking-widest text-[#021421] shadow-(--hero-shadow-button) outline-none focus-visible:ring-4 focus-visible:ring-ring/40 sm:h-16 sm:px-6 sm:text-lg"
+        href={href} 
+        className="group relative inline-flex items-center gap-3 overflow-hidden rounded-sm border border-white/15 bg-white/95 px-6 font-mono text-base font-black uppercase tracking-widest text-surface-base shadow-[0_8px_24px_rgb(0_0_0/0.3)] backdrop-blur-sm outline-none focus-visible:ring-4 focus-visible:ring-ring/40 sm:h-16 sm:px-6 sm:text-lg"
         style={{ display: "inline-flex" }}
       >
         <span ref={textRef} className="relative z-10 flex items-center gap-3">
           {label}
-          <span className="grid size-8 place-items-center rounded-full bg-brand-warning transition-transform duration-300 group-hover:translate-y-0.5 sm:size-9">
+          <span className="grid size-8 place-items-center rounded-full bg-brand-primary/15 text-brand-primary transition-transform duration-300 group-hover:translate-y-0.5 sm:size-9">
             <ArrowDown className="size-4 sm:size-5" strokeWidth={3} />
           </span>
         </span>

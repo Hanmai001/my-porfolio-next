@@ -16,11 +16,14 @@ export function PortfolioCursor({
     <motion.div
       className="pointer-events-none absolute left-0 top-0 z-50 hidden [@media(hover:hover)_and_(pointer:fine)]:block"
       style={{ x, y, translateX: "-50%", translateY: "-50%" }}
-      animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.6 }}
-      transition={{ duration: 0.18, ease: "easeOut" }}
+      animate={{
+        opacity: isVisible ? 1 : 0,
+        scale: isVisible ? 1 : 0.6,
+      }}
+      transition={{ type: "spring", stiffness: 500, damping: 30 }}
     >
-      <div className="bg-foreground border-border relative size-4 rounded-full border shadow-sm" />
-      <span className="bg-background border-border absolute left-1/2 mt-2 -translate-x-1/2 whitespace-nowrap rounded-full border px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-widest text-foreground">
+      <div className="relative size-3 rounded-full border border-white/40 bg-white/90 backdrop-blur-sm" />
+      <span className="absolute left-1/2 mt-2.5 -translate-x-1/2 whitespace-nowrap font-mono text-[9px] font-medium uppercase tracking-[0.2em] text-white/60">
         YOU
       </span>
     </motion.div>

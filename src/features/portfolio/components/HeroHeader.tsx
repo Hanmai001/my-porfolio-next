@@ -11,14 +11,14 @@ import {
 import type { PointerEvent } from "react";
 import { useState } from "react";
 
+import type { Phase } from "./HeroName";
 import { entranceEase, heroContent, lensSpring } from "../constants/hero";
 import { FloatingTag } from "./FloatingTag";
-import { HeroName } from "./HeroName";
+import { HeroName, useTypewriterSequence } from "./HeroName";
 import { InversionLens } from "./InversionLens";
 
 const lensHalfSize = 100;
-const maskTextClassName =
-  "text-brand-primary drop-shadow-[0_0_12px_rgb(56_189_248/0.36)] [text-shadow:0_1px_0_rgb(248_250_252/0.14)]";
+const maskTextClassName = "text-brand-primary";
 
 function canUseHeaderMask(shouldReduceMotion: boolean) {
   return (
@@ -41,7 +41,7 @@ function Annotation({
       initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       transition={{ delay: 0.16, duration: 0.58, ease: entranceEase }}
-      className="text-foreground mb-20 font-mono text-xl font-black lowercase leading-none tracking-normal sm:mb-24 sm:text-3xl"
+      className="text-foreground mb-24 font-annotation text-xl lowercase leading-none tracking-normal sm:mb-28 sm:text-3xl"
     >
       <span className={maskMode ? `-rotate-3 inline-block ${maskTextClassName}` : "-rotate-3 inline-block"}>
         {heroContent.annotation}
@@ -79,9 +79,9 @@ function Status({
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.88, duration: 0.48, ease: entranceEase }}
-      className="pt-4 flex items-center justify-center gap-3 font-mono text-sm font-black uppercase tracking-[0.08em] text-muted-foreground sm:mt-10 sm:text-lg"
+      className="pt-8 flex items-center justify-center gap-3 font-mono text-sm font-black uppercase tracking-[0.08em] text-muted-foreground sm:mt-14 sm:text-lg"
     >
-      <span className="glow-mint size-4 rounded-full border border-secondary/40 bg-secondary sm:size-5" />
+      <span className="glow-mint size-3.5 rounded-full border border-brand-secondary/40 bg-brand-secondary sm:size-4" />
       <span className={maskMode ? maskTextClassName : "text-foreground"}>{heroContent.status}</span>
     </motion.div>
   );
@@ -95,6 +95,10 @@ function HeaderArtwork({
   tagsY,
   decorative = false,
   maskMode = false,
+  isLensVisible = false,
+  sharedDisplayText,
+  sharedPhase,
+  sharedShowCursor,
 }: {
   shouldReduceMotion: boolean;
   nameX: MotionValue<number>;
@@ -103,6 +107,10 @@ function HeaderArtwork({
   tagsY: MotionValue<number>;
   decorative?: boolean;
   maskMode?: boolean;
+  isLensVisible?: boolean;
+  sharedDisplayText?: string;
+  sharedPhase?: Phase;
+  sharedShowCursor?: boolean;
 }) {
   return (
     <>
@@ -133,6 +141,11 @@ function HeaderArtwork({
           name={heroContent.name}
           decorative={decorative}
           maskMode={maskMode}
+          isActive={isLensVisible}
+          reducedMotion={shouldReduceMotion}
+          sharedDisplayText={sharedDisplayText}
+          sharedPhase={sharedPhase}
+          sharedShowCursor={sharedShowCursor}
           style={{
             x: shouldReduceMotion ? 0 : nameX,
             y: shouldReduceMotion ? 0 : nameY,
@@ -160,6 +173,7 @@ export function HeroHeader({
 }) {
   const [isLensVisible, setIsLensVisible] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const typewriter = useTypewriterSequence(heroContent.name, true, shouldReduceMotion);
   const lensX = useMotionValue(0);
   const lensY = useMotionValue(0);
   const smoothLensX = useSpring(lensX, lensSpring);
@@ -202,11 +216,17 @@ export function HeroHeader({
         nameY={nameY}
         tagsX={tagsX}
         tagsY={tagsY}
+        isLensVisible={isLensVisible}
+        sharedDisplayText={typewriter.displayText}
+        sharedPhase={typewriter.phase}
+        sharedShowCursor={typewriter.showCursor}
       />
+
+      <InversionLens isVisible={isLensVisible} x={smoothLensX} y={smoothLensY} />
 
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-30 overflow-visible"
+        className="pointer-events-none absolute inset-0 z-50 overflow-visible"
         style={{
           clipPath,
           WebkitClipPath: clipPath,
@@ -221,10 +241,12 @@ export function HeroHeader({
           tagsY={tagsY}
           decorative
           maskMode
+          isLensVisible={isLensVisible}
+          sharedDisplayText={typewriter.displayText}
+          sharedPhase={typewriter.phase}
+          sharedShowCursor={typewriter.showCursor}
         />
       </motion.div>
-
-      <InversionLens isVisible={isLensVisible} x={smoothLensX} y={smoothLensY} />
     </div>
   );
 }
