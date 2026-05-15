@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 
 import { cn } from "@/shared/lib/utils";
 
-import { entranceEase, maskTagToneClasses, tagToneClasses } from "../constants/hero";
-import type { TagTone } from "../types";
-import { Magnetic } from "./Magnetic";
+import { entranceEase, maskTagToneClasses, tagToneClasses } from "../../constants/hero";
+import type { TagTone } from "../../types";
+import { Magnetic } from "../Magnetic";
 
 export function FloatingTag({
   text,

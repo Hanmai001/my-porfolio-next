@@ -13,7 +13,7 @@ import { Fragment, useState } from "react";
 
 import { cn } from "@/shared/lib/utils";
 import type { Phase } from "./HeroName";
-import { entranceEase, heroContent, lensSpring } from "../constants/hero";
+import { entranceEase, heroContent, lensSpring } from "../../constants/hero";
 import { FloatingTag } from "./FloatingTag";
 import { FloatingTagCursor } from "./FloatingTagCursor";
 import { HeroName, useTypewriterSequence } from "./HeroName";

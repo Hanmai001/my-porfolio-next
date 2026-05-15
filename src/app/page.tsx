@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 
-import { AboutSection } from "@/features/portfolio/components/AboutSection";
-import { ScrollSnap } from "@/features/portfolio/components/ScrollSnap";
-import { SiteHeader } from "@/features/portfolio/components/SiteHeader";
-import { SkillsSection } from "@/features/portfolio/components/SkillsSection";
+import { AboutSection } from "@/features/portfolio/components/about/AboutSection";
+import { SkillsSection } from "@/features/portfolio/components/skills/SkillsSection";
+import { WorksSection } from "@/features/portfolio/components/works/WorksSection";
 import { PortfolioHeroView } from "@/features/portfolio/views/PortfolioHeroView";
+import { HomeLayout } from "@/shared/components/layouts/HomeLayout";
 
 export const metadata: Metadata = {
   title: "Helen Mai",
@@ -21,12 +21,11 @@ export default function HomePage() {
       </div>
 
       {/* MainContent slides up over Hero — rounded top edge + shadow create depth */}
-      <main id="main-content" className="relative z-20 min-h-screen rounded-t-3xl bg-background shadow-[0_-12px_60px_rgb(0_0_0/0.6)]">
-        <ScrollSnap />
-        <SiteHeader />
+      <HomeLayout>
         <AboutSection />
+        <WorksSection />
         <SkillsSection />
-      </main>
+      </HomeLayout>
     </>
   );
 }

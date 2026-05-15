@@ -2,7 +2,7 @@
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { skillsContent } from "../constants/skills";
+import { skillsContent } from "../../constants/skills";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 

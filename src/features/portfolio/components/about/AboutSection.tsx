@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { aboutContent } from "../constants/about";
+import { aboutContent } from "../../constants/about";
 import { PhotoStack } from "./PhotoStack";
 
 const ease = [0.22, 1, 0.36, 1] as const;

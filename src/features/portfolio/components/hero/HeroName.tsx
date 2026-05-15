@@ -6,7 +6,7 @@ import { motion, type MotionValue } from "framer-motion";
 
 import { cn } from "@/shared/lib/utils";
 
-import { nameTextClassName } from "../constants/hero";
+import { nameTextClassName } from "../../constants/hero";
 import { SelectionBox } from "./SelectionBox";
 
 export type Phase = "greeting" | "erasing" | "name" | "done";

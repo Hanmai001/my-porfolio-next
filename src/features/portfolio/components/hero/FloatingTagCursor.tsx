@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/shared/lib/utils";
-import { entranceEase } from "../constants/hero";
-import type { TagTone } from "../types";
+import { entranceEase } from "../../constants/hero";
+import type { TagTone } from "../../types";
 
 const bubbleSpring = { type: "spring", stiffness: 200, damping: 25 } as const;
 

@@ -12,14 +12,14 @@ import {
 import type { PointerEvent } from "react";
 
 import { cn } from "@/shared/lib/utils";
-import { DotGridBackground } from "../components/DotGridBackground";
-import { FloatingTagCursor } from "../components/FloatingTagCursor";
-import { FloatingTag } from "../components/FloatingTag";
-import { HeroContent } from "../components/HeroContent";
-import { HeroHeader } from "../components/HeroHeader";
-import { LiveClock } from "../components/LiveClock";
-import { MultiplayerCursor } from "../components/MultiplayerCursor";
-import { PortfolioCursor } from "../components/PortfolioCursor";
+import { DotGridBackground } from "../components/hero/DotGridBackground";
+import { FloatingTagCursor } from "../components/hero/FloatingTagCursor";
+import { FloatingTag } from "../components/hero/FloatingTag";
+import { HeroContent } from "../components/hero/HeroContent";
+import { HeroHeader } from "../components/hero/HeroHeader";
+import { LiveClock } from "../components/hero/LiveClock";
+import { MultiplayerCursor } from "../components/hero/MultiplayerCursor";
+import { PortfolioCursor } from "../components/hero/PortfolioCursor";
 import { heroContent } from "../constants/hero";
 
 export function PortfolioHeroView() {

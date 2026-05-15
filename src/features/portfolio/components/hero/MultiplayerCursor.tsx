@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 import { cn } from "@/shared/lib/utils";
 
-import { entranceEase } from "../constants/hero";
+import { entranceEase } from "../../constants/hero";
 
 const bubbleSpring = { type: "spring", stiffness: 200, damping: 25 } as const;
 

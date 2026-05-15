@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { homeCta, homeNavItems } from "@/shared/constants/navigation";
+import { useLenis } from "@/shared/providers/AppProviders";
 import { AnimatePresence, motion } from "framer-motion";
 import { Mail, Menu, X } from "lucide-react";
-import { aboutContent } from "../constants/about";
-import { useLenis } from "@/shared/providers/AppProviders";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 const HEADER_HEIGHT = 64;
 
@@ -16,7 +16,7 @@ export function SiteHeader() {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const sectionIds = aboutContent.nav
+    const sectionIds = homeNavItems
       .map((item) => item.href.slice(1))
       .filter((id) => !!document.getElementById(id));
 
@@ -62,7 +62,7 @@ export function SiteHeader() {
     scrollTo(target, { offset: -HEADER_HEIGHT, duration: 1.2 });
   }
 
-  const navItems = aboutContent.nav.map((item) => {
+  const navItems = homeNavItems.map((item) => {
     const id = item.href.slice(1);
     const isActive = activeId === id;
     return { ...item, id, isActive };
@@ -91,16 +91,14 @@ export function SiteHeader() {
               key={label}
               href={href}
               onClick={(e) => handleNavClick(e, href)}
-              className={`relative font-mono text-sm font-medium transition-colors duration-200 ${
-                isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
-              }`}
+              className={`relative font-mono text-sm font-medium transition-colors duration-200 ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
             >
               {label}
               <span
                 aria-hidden
-                className={`absolute -bottom-2.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-brand-primary transition-opacity duration-300 ${
-                  isActive ? "opacity-100" : "opacity-0"
-                }`}
+                className={`absolute -bottom-2.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-brand-primary transition-opacity duration-300 ${isActive ? "opacity-100" : "opacity-0"
+                  }`}
               />
             </a>
           ))}
@@ -132,17 +130,15 @@ export function SiteHeader() {
                       key={label}
                       href={href}
                       onClick={(e) => handleNavClick(e, href)}
-                      className={`flex items-center gap-3 px-5 py-3 font-mono text-sm font-medium transition-colors duration-150 ${
-                        isActive
+                      className={`flex items-center gap-3 px-5 py-3 font-mono text-sm font-medium transition-colors duration-150 ${isActive
                           ? "text-foreground"
                           : "text-muted-foreground hover:text-foreground hover:bg-surface-elevated/50"
-                      }`}
+                        }`}
                     >
                       <span
                         aria-hidden
-                        className={`size-1.5 rounded-full bg-brand-primary transition-opacity duration-300 ${
-                          isActive ? "opacity-100" : "opacity-0"
-                        }`}
+                        className={`size-1.5 rounded-full bg-brand-primary transition-opacity duration-300 ${isActive ? "opacity-100" : "opacity-0"
+                          }`}
                       />
                       {label}
                     </a>
@@ -155,10 +151,10 @@ export function SiteHeader() {
 
         {/* CTA */}
         <a
-          href={aboutContent.cta.href}
+          href={homeCta.href}
           className="inline-flex items-center gap-2 rounded-full bg-brand-primary px-4 py-2 font-mono text-xs font-black uppercase tracking-widest text-white shadow-[0_4px_16px_rgb(99_102_241/0.35)] transition-opacity duration-200 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 sm:gap-3 sm:px-5 sm:py-2.5 sm:text-sm"
         >
-          <span className="hidden sm:inline">{aboutContent.cta.label}</span>
+          <span className="hidden sm:inline">{homeCta.label}</span>
           <span className="sm:hidden">Email</span>
           <Mail size={14} className="stroke-[3px] sm:hidden" />
           <Mail size={16} className="hidden stroke-[3px] sm:block" />

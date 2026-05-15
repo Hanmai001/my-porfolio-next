@@ -15,10 +15,5 @@ export const aboutContent = {
     { role: "Frontend Engineer", company: "Freelance", from: "05/2025", to: "08/2025" },
     { role: "Frontend Engineer", company: "Freelance", from: "02/2024", to: "04/2024" },
   ],
-  nav: [
-    { label: "Works", href: "#works" },
-    { label: "Skills & Tools", href: "#skills" },
-    { label: "About", href: "#about" },
-  ],
-  cta: { label: "Email Me", href: "mailto:giahanmai3110@gmail.com" },
+
 };

@@ -7,7 +7,7 @@ import { ArrowDown } from "lucide-react";
 
 import { gsap } from "@/shared/lib/gsap";
 
-import { entranceEase } from "../constants/hero";
+import { entranceEase } from "../../constants/hero";
 
 const PADDING = 80;
 

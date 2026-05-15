@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 import { cn } from "@/shared/lib/utils";
 
-import { entranceEase } from "../constants/hero";
+import { entranceEase } from "../../constants/hero";
 
 function CornerHandle({
   position,

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 import { useLenis } from "@/shared/providers/AppProviders";
-import { entranceEase, heroContent } from "../constants/hero";
+import { entranceEase, heroContent } from "../../constants/hero";
 import { MagneticButton } from "./MagneticButton";
 
 export function HeroContent({ shouldReduceMotion: _ }: { shouldReduceMotion: boolean }) {
