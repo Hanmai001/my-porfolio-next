@@ -1,9 +1,14 @@
-import type { ReactNode } from "react";
-
-export type TagTone = "secondary" | "primary" | "accent" | "warning" | "energy";
-
-export interface MagneticProps {
-  children: ReactNode;
-  className?: string;
-  strength?: number;
-}
+// Re-exports — all types have moved to @/shared/types
+export type {
+  TagTone,
+  MagneticProps,
+  WorkCategory,
+  WorkFilter,
+  SpotlightStyle,
+  FeatureHotspot,
+  ProjectFeature,
+  ProjectPreviewSlide,
+  ProjectChallenge,
+  ProjectDetail,
+  WorkItem,
+} from "@/shared/types/work-project";

@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-
-import { motion } from "framer-motion";
+import { motion, useAnimationFrame, useMotionValue } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/shared/lib/utils";
 
@@ -24,6 +23,13 @@ export function MultiplayerCursor({
   tone: "primary" | "accent" | "secondary";
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [shouldMarquee, setShouldMarquee] = useState(false);
+  const [paused, setPaused] = useState(false);
+
+  const textRowRef = useRef<HTMLSpanElement>(null);
+  const trackRef = useRef<HTMLSpanElement>(null);
+  const contentWidthRef = useRef(0);
+  const xVal = useMotionValue(0);
 
   const dotTone =
     tone === "accent"
@@ -31,6 +37,43 @@ export function MultiplayerCursor({
       : tone === "secondary"
         ? "after:shadow-[0_0_22px_rgb(52_211_153/0.45)]"
         : "after:shadow-[0_0_22px_rgb(56_189_248/0.45)]";
+
+  // Measure overflow after bubble opens
+  useEffect(() => {
+    if (!isOpen || !textRowRef.current) return;
+    const el = textRowRef.current;
+    setShouldMarquee(el.scrollWidth > el.offsetWidth + 1);
+  }, [isOpen, message]);
+
+  // Measure one-copy width once marquee is confirmed
+  useEffect(() => {
+    if (!shouldMarquee || !trackRef.current) return;
+    contentWidthRef.current = trackRef.current.scrollWidth / 2;
+  }, [shouldMarquee, message]);
+
+  // Reset position and state when message changes
+  useEffect(() => {
+    xVal.set(0);
+    contentWidthRef.current = 0;
+    setShouldMarquee(false);
+  }, [message, xVal]);
+
+  // Reset position when bubble closes
+  useEffect(() => {
+    if (!isOpen) xVal.set(0);
+  }, [isOpen, xVal]);
+
+  // Frame ticker — drives x in pixels; wraps atomically; pauses by skipping increment
+  const speed = Math.max(3, message.length * 0.1);
+  useAnimationFrame((_, delta) => {
+    if (!shouldMarquee || !isOpen || paused || contentWidthRef.current === 0) return;
+    const pxPerSec = contentWidthRef.current / speed;
+    let next = xVal.get() - pxPerSec * (delta / 1000);
+    if (next <= -contentWidthRef.current) {
+      next += contentWidthRef.current;
+    }
+    xVal.set(next);
+  });
 
   return (
     <motion.div
@@ -95,20 +138,47 @@ export function MultiplayerCursor({
             opacity: isOpen ? 1 : 0,
             x: isOpen ? 0 : -8,
           }}
-          transition={
-            isOpen
-              ? bubbleSpring
-              : { duration: 0.18, ease: "easeOut" }
-          }
-          className="relative z-10 flex min-w-0 items-center overflow-hidden whitespace-nowrap"
+          transition={isOpen ? bubbleSpring : { duration: 0.18, ease: "easeOut" }}
+          className="relative z-10 flex min-w-0 items-center overflow-hidden"
           aria-hidden={!isOpen}
         >
           <span className="flex min-w-0 flex-col gap-0.5 pl-3 pr-4">
-            <span className="font-mono text-[0.62rem] font-black uppercase tracking-[0.18em] text-brand-primary">
+            <span className="whitespace-nowrap font-mono text-[0.62rem] font-black uppercase tracking-[0.18em] text-brand-primary">
               {name}
             </span>
-            <span className="font-mono text-xs font-semibold text-white sm:text-sm">
-              {message}
+
+            {/* Message row — marquee container */}
+            <span
+              ref={textRowRef}
+              className="relative overflow-hidden"
+              style={
+                shouldMarquee
+                  ? {
+                      maskImage:
+                        "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+                      WebkitMaskImage:
+                        "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+                    }
+                  : undefined
+              }
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+            >
+              <motion.span
+                ref={trackRef}
+                style={{ x: xVal, willChange: "transform" }}
+                className="flex shrink-0 whitespace-nowrap"
+              >
+                <span className="pr-10 font-mono text-xs font-semibold text-white sm:text-sm">
+                  {message}
+                </span>
+                <span
+                  className="pr-10 font-mono text-xs font-semibold text-white sm:text-sm"
+                  aria-hidden
+                >
+                  {message}
+                </span>
+              </motion.span>
             </span>
           </span>
         </motion.span>

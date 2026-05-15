@@ -12,11 +12,11 @@ import type { PointerEvent } from "react";
 import { Fragment, useState } from "react";
 
 import { cn } from "@/shared/lib/utils";
-import type { Phase } from "./HeroName";
 import { entranceEase, heroContent, lensSpring } from "../../constants/hero";
+import { useTypewriterSequence, type Phase } from "../../hooks/useTypewriterSequence";
 import { FloatingTag } from "./FloatingTag";
 import { FloatingTagCursor } from "./FloatingTagCursor";
-import { HeroName, useTypewriterSequence } from "./HeroName";
+import { HeroName } from "./HeroName";
 import { InversionLens } from "./InversionLens";
 
 const lensHalfSize = 100;

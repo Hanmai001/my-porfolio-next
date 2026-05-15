@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useRef } from "react";
-import { MotionConfig, useReducedMotion } from "framer-motion";
+import { LayoutGroup, MotionConfig, useReducedMotion } from "framer-motion";
 import Lenis from "lenis";
 
 interface AppProvidersProps {
@@ -74,7 +74,9 @@ function LenisProvider({ children }: AppProvidersProps) {
 function AppProviders({ children }: AppProvidersProps) {
   return (
     <MotionConfig reducedMotion="user">
-      <LenisProvider>{children}</LenisProvider>
+      <LenisProvider>
+        <LayoutGroup id="portfolio">{children}</LayoutGroup>
+      </LenisProvider>
     </MotionConfig>
   );
 }
